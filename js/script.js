@@ -145,21 +145,29 @@ botoncito2.addEventListener('click', ()=>
 
 
 let time = 0;
+let direction = 0;
 function Update()
 {
     requestAnimationFrame(Update);
 
     // Mover al jugador
-    if(teclas.w) jugador.position.z -=speed;
-    if(teclas.s) jugador.position.z +=speed;
-    if(teclas.a) jugador.position.x -=speed;
-    if(teclas.d) jugador.position.x +=speed;
+    if(teclas.w) {
+        jugador.position.x += lengthdir_x(speed, direction);
+        jugador.position.z += lengthdir_y(speed, direction);
+    }
+    if(teclas.s) {
+        jugador.position.x += lengthdir_x(speed, direction-DegToRad(180));
+        jugador.position.z += lengthdir_y(speed, direction-DegToRad(180));
+    }
+    if(teclas.a) direction += speed;
+    if(teclas.d) direction -= speed;
 
     // Flotar en el agua
     jugador.position.y += Math.sin(time*3) * 0.003;
     time+=1/60;
 
     // Rotar con las olas
+jugador.rotation.y = direction;
     jugador.rotation.x += Math.sin(time*3) * 0.003;
     jugador.rotation.z += Math.sin(time*2) * 0.003;
     time+=1/60;
@@ -170,6 +178,12 @@ function Update()
 
     model_cocodrilo.rotation.copy(jugador.rotation);
     model_jetski.rotation.copy(jugador.rotation);
+
+    // limitar direccion
+    if (direction > DegToRad(360))
+        direction = 0;
+    if (direction < 0)
+        direction = DegToRad(360);
     /*
     model_cocodrilo.position.set(jugador.position.x, jugador.position.y, jugador.position.z);
     model_jetski.position.set(jugador.position.x, jugador.position.y, jugador.position.z);
@@ -186,6 +200,20 @@ function Update()
 
     // Renderizamos la escena
     renderer.render(escena,camara);
+}
+
+function lengthdir_x(dist, angle)
+{
+    return dist * Math.cos(angle);
+}
+ 
+function lengthdir_y(dist, angle)
+{
+    return dist * -Math.sin(angle);
+}
+
+function DegToRad(angle){
+    return angle * Math.PI/180
 }
 
 Update();
