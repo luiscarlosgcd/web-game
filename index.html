@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Práctica Three.js</title>
+    <script type="importmap">
+        {
+            "imports": {
+                "three" : "https://unpkg.com/three@0.154.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.154.0/examples/jsm/"
+            }
+        }
+    </script>
+    <script type="module" src="js/script.js"></script>
+    <style>
+        body{margin:0;}
+        #botoncito, #botoncito2
+        {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            padding: 8px;
+            background-color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #botoncito2
+        {
+            top: 64px;
+        }
+    </style>
+</head>
+<body>
+    <button id="botoncito">Cambiar Fondo</button>
+    <button id="botoncito2">Cambiar Cubo</button>
+</body>
+</html>
